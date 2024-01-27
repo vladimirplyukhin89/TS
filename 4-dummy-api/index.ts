@@ -3,66 +3,84 @@ function generateError(msg: string):never {
     throw new Error(msg);
 }
 
-enum GENDERS {
-    MALE = 'male',
-    FEMALE = 'female'
-}
+const genders = {
+    male:'male',
+    female:'female'
+} as const;
 
-enum BLOOD_GROUPS {
-    'A_POSITIVE' = 'A+',
-    'A_NEGATIVE' = 'A-',
-    'B_POSITIVE' = 'B+',
-    'B_NEGATIVE' = 'B-',
-    'O_POSITIVE' = 'O+',
-    'O_NEGATIVE' = 'O-',
-    'AB_POSITIVE' = 'AB+',
-    'AB_NEGATIVE' = 'AB-'
-}
+type GendersKeys = typeof genders[keyof typeof genders];
+// type GendersKeys = typeof genders[keyof Object];
 
-enum EYE_COLOR {
-    Green,
-    Brown,
-    Gray,
-    Blue
-}
-enum HAIR_COLOR {
-    Black,
-    Brown,
-    White
-}
+const bloodGroups = {
+    'A_POSITIVE': 'A+',
+    'A_NEGATIVE': 'A-',
+    'B_POSITIVE': 'B+',
+    'B_NEGATIVE': 'B-',
+    'O_POSITIVE': 'O+',
+    'O_NEGATIVE': 'O-',
+    'AB_POSITIVE': 'AB+',
+    'AB_NEGATIVE': 'AB-'
+} as const;
 
-enum HAIR_TYPE {
-    Strands,
-    Curly
-}
+type BloodGroupsKeys = typeof bloodGroups[keyof typeof bloodGroups];
 
-enum CARD_TYPE {
-    MAESTRO = 'maestro',
-    MASTERCARD = 'mastercard',
-    VISA = 'visa'
-}
+const eyeColor = {
+    Green: 'Green',
+    Brown: 'Brown',
+    Gray: 'Gray',
+    Blue: 'Blue'
+} as const;
 
-enum CURRENCY {
-    PESO = 'Peso',
-    DOLLAR = 'Dollar',
-    EURO = 'Euro'
-}
+type eyeColorKeys = typeof eyeColor[keyof typeof eyeColor];
 
-enum CRYPTO_COIN {
-    BITCOIN = 'Bitcoin',
-}
+const hairColor = {
+    Black: 'Black',
+    Brown: 'Brown',
+    White: 'White'
+} as const;
+
+type hairColorKeys = typeof hairColor[keyof typeof hairColor];
+
+const hairType = {
+    Strands: 'Strands',
+    Curly: 'Curly'
+} as const;
+
+type hairTypeKeys = typeof hairType[keyof typeof hairType];
+
+const cardType = {
+    maestro: 'maestro',
+    mastercard: 'mastercard',
+    visa: 'visa'
+} as const;
+
+type cardTypeKeys = typeof cardType[keyof typeof cardType];
+
+const currency = {
+    Peso: 'Peso',
+    Dollar: 'Dollar',
+    Euro: 'Euro'
+} as const;
+
+type currencyKeys = typeof currency[keyof typeof currency];
+
+const cryptoCoin = {
+    Bitcoin: 'Bitcoin',
+} as const;
+
+type cryptoCoinKeys = typeof cryptoCoin[keyof typeof cryptoCoin];
 
 interface IBank {
     cardExpire: string,
     cardNumber: string,
-    cardType: CARD_TYPE.MAESTRO,
-    currency: CURRENCY.PESO,
+    cardType: cardTypeKeys,
+    currency: currencyKeys,
     iban: string
 }
 
 interface iUserHair {
-    color: HAIR_COLOR.Black
-    type: HAIR_TYPE.Strands
+    color: hairColorKeys
+    type: hairTypeKeys
 }
 
 interface ICoordinates {
@@ -86,7 +104,7 @@ interface ICompany {
 }
 
 interface ICrypto {
-    coin: CRYPTO_COIN.BITCOIN
+    coin: cryptoCoinKeys
     wallet: string
     network: string
 }
@@ -97,17 +115,17 @@ interface IUser {
     lastName: string
     maidenName: string
     age: number
-    gender: GENDERS.MALE
+    gender: GendersKeys
     email: string
     phone: string
     username: string
     password: string
     birthDate: string
     image: string
-    bloodGroup: BLOOD_GROUPS.A_POSITIVE
+    bloodGroup: BloodGroupsKeys
     height: number
     weight: number
-    eyeColor: EYE_COLOR.Green
+    eyeColor: eyeColorKeys
     hair: iUserHair
     domain: string
     ip: string
@@ -122,9 +140,10 @@ interface IUser {
     crypto: ICrypto
 }
 
-interface IResponse {
+export interface IResponse {
     users: IUser[]
     total: number
     skip: number
     limit: number
 }
+
